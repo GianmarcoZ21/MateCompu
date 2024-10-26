@@ -1,5 +1,5 @@
+#Modificación
 import warnings
-
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 import networkx as nx
 import matplotlib.pyplot as plt
