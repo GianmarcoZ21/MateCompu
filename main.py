@@ -25,6 +25,38 @@ caminos_izq = [1, 3, 5, 8, 10, 12, 14]
 caminos_der = [2, 4, 6, 9, 11, 13, 15]
 
 
+def alerta(tipo_alerta):
+    global matriz, matrizAux, pesoMax
+
+    if tipo_alerta == 'peso':
+        if pesoMax < 7:
+            ventana_alerta = Tk()
+            ventana_alerta.title("Alerta")
+            ventana_alerta.geometry("350x150")
+
+            alerta_label = Label(ventana_alerta, font=("Arial", 12, "bold"), fg="red")
+            alerta_label.pack(pady=20)
+            alerta_label.config(text="Peso máximo inválido.")
+            btn_aceptar = Button(ventana_alerta, text="Aceptar", command=ventana_alerta.destroy)
+            btn_aceptar.pack(pady=10)
+            ventana_alerta.mainloop()
+        else:
+            return
+
+    elif tipo_alerta == 'matriz':
+        if matriz is None or matrizAux is None:
+            ventana_alerta = Tk()
+            ventana_alerta.title("Alerta")
+            ventana_alerta.geometry("350x150")
+            alerta_label = Label(ventana_alerta, font=("Arial", 12, "bold"), fg="red")
+            alerta_label.pack(pady=20)
+            alerta_label.config(text="No se ha creado la matriz.")
+            btn_aceptar = Button(ventana_alerta, text="Aceptar", command=ventana_alerta.destroy)
+            btn_aceptar.pack(pady=10)
+            ventana_alerta.mainloop()
+        else:
+            return
+
 def menu():
     ventana_menu = Tk()
     ventana_menu.title("Presentación")
@@ -84,6 +116,7 @@ def reiniciarTodo():
 
 def verMatriz():
     global matrizAux
+    alerta('matriz')
     mostrar_Matriz = Toplevel(root)
     mostrar_Matriz.title("Matriz adyacente")
     mostrar_Matriz.geometry("610x400")
@@ -178,7 +211,7 @@ def crearMatrizManual(n):
 
     new_window = Toplevel(root)
     new_window.title("Crear Matriz Manual")
-    new_window.geometry("1150x900")
+    new_window.geometry("1400x900")
 
     frame = Frame(new_window)
     frame.pack(side=LEFT, padx=10, pady=10)
@@ -309,24 +342,20 @@ def crearMatrizManual(n):
 def crearMatriz():
     global matriz
     global flujoMax
-    global bordesEliminados
+    global bordesEliminados, pesoMax
 
     n = int(tamanioMatrizVar.get())
     tipo = tipoMatrizVar.get()
 
+    if pesoMax<7:
+        alerta('peso')
+        return
     if tipo == 'a':
         matriz = crearMatrizAleatoria(n)
     elif tipo == 'm':
         matriz = crearMatrizManual(n)
     else:
-        no_selecciona = Tk()
-        no_selecciona.geometry("550x100")
-
-        labelNoSelecciona = Label(no_selecciona, text="Debe seleccionar una opción (Aleatorio o Manual).",
-                                  font=("Arial", 14))
-        labelNoSelecciona.pack(pady=20)
-
-        no_selecciona.mainloop()
+        alerta('matriz')
 
 
 def grafoMatrizInicial(n):
@@ -355,15 +384,7 @@ def grafoMatriz(n):
 
 def verGrafoInicial():
     global matrizAux
-    if matrizAux is None:
-        no_matriz = Tk()
-        no_matriz.geometry("300x300")
-
-        labelNoMatriz = Label(no_matriz, text="No se ha creado la matriz",
-                              font=("Arial", 14))
-        labelNoMatriz.pack(pady=20)
-
-        no_matriz.mainloop()
+    alerta('matriz')
 
     n = len(matrizAux)
     new_window = Toplevel(root)
@@ -407,15 +428,7 @@ def verGrafoInicial():
 
 def verGrafo():
     global matriz, bordesEliminados, flujoMax
-    if matriz is None:
-        no_matriz = Tk()
-        no_matriz.geometry("300x300")
-
-        labelNoMatriz = Label(no_matriz, text="No se ha creado la matriz",
-                              font=("Arial", 14))
-        labelNoMatriz.pack(pady=20)
-
-        no_matriz.mainloop()
+    alerta('matriz')
 
     n = len(matriz)
     new_window = Toplevel(root)
@@ -500,6 +513,10 @@ class VisualizarGrafo:
 
     def verMatriz(self):
         global matriz
+        if matrizAux is None:
+            alerta('matriz')
+            return
+
         new_window = Toplevel()
         new_window.title("Matriz Actual")
         new_window.geometry("610x600")
@@ -653,8 +670,7 @@ class VisualizarGrafo:
 
 def mostrarCaminos():
     global matriz, caminosPreferidos
-    if matriz is None:
-        return
+    alerta('matriz')
 
     n = len(matriz)
     bordes, dicV = grafoMatriz(n)
@@ -695,6 +711,7 @@ def elegirPesoMax():
                 peso_label.config(text=f"El valor de su peso máximo es {pesoMax}", font=("Arial", 12), fg="blue")
         except ValueError:
             peso_label.config(text="Por favor, ingrese un número entero válido.", font=("Arial", 12), fg="red")
+            pesoMax=0
 
         peso_label.pack(pady=10)
 
