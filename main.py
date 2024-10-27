@@ -738,7 +738,7 @@ frmC = Frame(frmP, bg='#d1f497')
 frmP.pack(padx=10, pady=10)
 frmC.pack(padx=10, pady=10)
 
-lblTamanioMatriz = Label(frmC, text="Seleccione el tamaño de la matriz (entre 8 y 16):", bg='#d1f497',
+lblTamanioMatriz = Label(frmC, text="Seleccione el tamaño de la matriz (mínimo 7):", bg='#d1f497',
                          font=("Arial", 12))
 lblTipoMatriz = Label(frmC, text="¿Cómo desea generar la matriz?", bg='#d1f497', font=("Arial", 12))
 
