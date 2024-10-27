@@ -75,6 +75,7 @@ def menu():
 
     lblUniversidad = Label(frmC, text="Universidad Peruana de Ciencias\nTB1\n\n", font=("Arial", 15, "bold"),
                            bg='#ef8383')
+    # Alumnos:
     lblA1 = Label(frmC, text="César Augusto Aróstegui Alzamora - U202114548", font=("Arial", 15), bg='#ef8383')
     lblA2 = Label(frmC, text="Gianmarco Fabian Jiménez Guerra - U202123843", font=("Arial", 15), bg='#ef8383')
     lblA3 = Label(frmC, text="Alessandra Nicole Becerra Tejeda - U202318947", font=("Arial", 15), bg='#ef8383')
