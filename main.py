@@ -685,7 +685,13 @@ def mostrarCaminos():
         VisualizarGrafo(root, caminosPreferidos)
         root.mainloop()
     else:
-        print("No hay caminos posibles entre 'a' y 'h'.")
+        ventana_no_caminos = Tk()
+        ventana_no_caminos.title("Sin caminos")
+        ventana_no_caminos.geometry("350x150")
+
+        ventana_label = Label(ventana_no_caminos, font=("Arial", 12, "bold"), fg="red")
+        ventana_label.pack(pady=20)
+        ventana_label.config(text="No hay caminos posibles entre 'a' y 'h'.")
 
 
 def elegirPesoMax():
